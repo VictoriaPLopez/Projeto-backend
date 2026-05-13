@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Aumento de Preço</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f3f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 320px;
+    }
+
+    input {
+      padding: 8px;
+      width: 80%;
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1e7e34;
+    }
+
+    .resultado {
+      margin-top: 15px;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Reajuste de Preço</h2>
+
+  <label>Preço atual (R$):</label><br>
+  <input type="number" id="preco" step="0.01" placeholder="Digite o preço"><br>
+
+  <button onclick="calcularAumento()">Calcular</button>
+
+  <div class="resultado" id="resultado"></div>
+</div>
+
+<script>
+  function calcularAumento() {
+    const preco = parseFloat(document.getElementById("preco").value);
+
+    if (isNaN(preco) || preco <= 0) {
+      document.getElementById("resultado").innerText = "Por favor, insira um preço válido.";
+      return;
+    } // se não tiver preço ou o valor for menor que 0, vai retornar uma mensagem avisando sobre o erro.
+
+    const percentual = 0.15; // igual a 15%
+    const aumento = preco * percentual; // aumento é igual ao preço vezes 15%
+    const novoPreco = preco + aumento;  // o novo preço vai ser igual ao preço anterior mais o aumento.
+
+    const formatar = (valor) => {
+      return valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      });
+    };
+
+    document.getElementById("resultado").innerHTML = `
+      Preço original: ${formatar(preco)}<br>
+      Percentual aplicado: 15%<br>
+      Valor do aumento: ${formatar(aumento)}<br>
+      Novo preço: ${formatar(novoPreco)}<br>
+      Diferença: ${formatar(aumento)}
+    `;  // o que vai aparecer na tela.
+  }
+</script>
+
+</body>
+</html>
