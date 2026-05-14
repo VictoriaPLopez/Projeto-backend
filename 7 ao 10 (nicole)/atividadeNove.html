@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Parcelamento de Compra</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 320px;
+    }
+
+    input, select {
+      padding: 8px;
+      width: 85%;
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .resultado {
+      margin-top: 15px;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Parcelamento</h2>
+
+  <label>Valor total (R$):</label><br>
+  <input type="number" id="total" step="0.01" placeholder="Digite o valor"><br>
+
+  <label>Número de parcelas:</label><br>
+  <select id="parcelas">
+    <option value="1">1x</option>
+    <option value="2">2x</option>
+    <option value="3">3x</option>
+    <option value="4">4x</option>
+    <option value="5" selected>5x</option>
+  </select><br>
+
+  <button onclick="calcularParcelas()">Calcular</button>
+
+  <div class="resultado" id="resultado"></div>
+</div>
+
+<script>
+  function calcularParcelas() {
+    const total = parseFloat(document.getElementById("total").value);
+    const parcelas = parseInt(document.getElementById("parcelas").value);
+
+    if (isNaN(total) || total <= 0) {
+      document.getElementById("resultado").innerText = "Informe um valor válido.";
+      return;
+    } // se não tiver total ou for menor ou igual a 0, vai retornar uma mensagem avisando sobre o erro.
+
+    const valorParcela = total / parcelas; // o valor da parcela vai ser igual ao total dividido pela quantidade de parcelas.
+
+    const formatar = (valor) => {
+      return valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      });
+    };
+
+    document.getElementById("resultado").innerHTML = `
+      Valor total: ${formatar(total)}<br>
+      Parcelas: ${parcelas}x<br>
+      Valor de cada parcela: ${formatar(valorParcela)} 
+    `;// o que vai aparecer.
+  }
+</script>
+
+</body>
+</html>

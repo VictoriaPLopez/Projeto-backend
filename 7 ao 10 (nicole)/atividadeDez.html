@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Juros Compostos</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef3f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 340px;
+    }
+
+    input {
+      padding: 8px;
+      width: 85%;
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1e7e34;
+    }
+
+    .resultado {
+      margin-top: 15px;
+      font-weight: bold;
+      line-height: 1.6;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Juros Compostos</h2>
+
+  <label>Valor inicial (R$):</label><br>
+  <input type="number" id="capital" step="0.01" placeholder="Digite o valor"><br>
+
+  <label>Tempo (meses):</label><br>
+  <input type="number" id="meses" min="1" placeholder="Digite os meses"><br>
+
+  <button onclick="calcular()">Calcular</button>
+
+  <div class="resultado" id="resultado"></div>
+</div>
+
+<script>
+  function calcular() {
+    const capital = parseFloat(document.getElementById("capital").value);
+    const meses = parseInt(document.getElementById("meses").value);
+    const taxa = 0.02;
+
+    if (isNaN(capital) || capital <= 0 || isNaN(meses) || meses <= 0) {
+      document.getElementById("resultado").innerText = "Preencha os valores corretamente.";
+      return;
+    }// se não tiver capital, for menor ou igual a 0, não tiver meses ou for menor ou igual a 0, vai retornar uma mensagem avisando sobre o erro.
+
+    const montante = capital * Math.pow((1 + taxa), meses);
+    const juros = montante - capital;
+
+    const formatar = (valor) => {
+      return valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      });
+    };
+
+    document.getElementById("resultado").innerHTML = `
+      Valor inicial: ${formatar(capital)}<br>
+      Tempo: ${meses} mês(es)<br>
+      Taxa: 2% ao mês<br><br>
+
+      Valor final: ${formatar(montante)}<br>
+      Juros ganhos: ${formatar(juros)}
+    `; // o que aparece na tela.
+  }
+</script>
+
+</body>
+</html>

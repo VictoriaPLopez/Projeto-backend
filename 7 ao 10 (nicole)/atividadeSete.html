@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Estoque</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 320px;
+    }
+
+    input {
+      padding: 8px;
+      width: 80%;
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #b52a37;
+    }
+
+    .resultado {
+      margin-top: 15px;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    .erro {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Controle de Estoque</h2>
+
+  <p>Estoque inicial: <strong>120 unidades</strong></p>
+
+  <label>Quantidade vendida:</label><br>
+  <input type="number" id="vendidos" min="0" placeholder="Digite a quantidade"><br>
+
+  <button onclick="calcularEstoque()">Calcular</button>
+
+  <div class="resultado" id="resultado"></div>
+</div>
+
+<script>
+  function calcularEstoque() {
+    const estoqueInicial = 120;
+    const vendidos = parseInt(document.getElementById("vendidos").value); // informações do código.
+    
+    if (isNaN(vendidos) || vendidos < 0) {
+      document.getElementById("resultado").innerText = "Informe uma quantidade válida.";
+      return; // se não tiver informações sobre o valor de produtos vendidos ou o numero for menor que zero, vai retornar uma mensagem avisando sobre o erro.
+    }
+
+    if (vendidos > estoqueInicial) {
+      document.getElementById("resultado").innerHTML =
+        "<span class='erro'>Erro: quantidade vendida maior que o estoque disponível!</span>";
+      return; // se a quantidade de produtos vendidos for maio que o estoque inicial, vai retornar uma mensagem avisando sobre o erro.
+    }
+
+    const restante = estoqueInicial - vendidos; // o valor restante é igual ao estoque menos o numero vendido.
+
+    document.getElementById("resultado").innerHTML = `
+      Estoque inicial: ${estoqueInicial} unidades<br>
+      Quantidade vendida: ${vendidos} unidades<br>
+      Estoque restante: ${restante} unidades
+    `; // o que vai aparecer na tela
+  }
+</script>
+
+</body>
+</html>
